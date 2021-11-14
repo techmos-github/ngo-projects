@@ -1,0 +1,337 @@
+[
+    {
+      "id": "101",
+      "district": "Thiruvallur",
+      "location": ["Gummudipoondi", "Ponneri", "Thiruthani","Thiruvallur","Poonamallee","Avadi","Madhuravoyil","Ambattur","Madhavaram","Thiruvottriyur"],
+      "state": "Tamil Nadu",
+      "country": "India"
+    },
+    {
+      "id": "102",
+      "district": "Chennai",
+      "location": [
+        "Radhakrishnan Nagar", "Perambur", "Kolathur", "Villivakkam", "T.V.K. Nagar", "Egmore","Royapuram","Port", "Chepauk-Thiruvallikkeni", "Thousand Lights",
+        "Anna Nagar","Virugambakkam","Saidapet","Thiyagaraya Nagar","Mylapore","Velachery","South Chennai","Central Chennai","North Chennai"
+      ],
+      "state": "Tamil Nadu",
+      "country": "India"
+    },
+    {
+      "id": "103",
+      "district": "Kanchipuram",
+      "location": ["Alandur", "Thiruperumbudur", "Uttiramerur","Kanchipuram"],
+      "state": "Tamil Nadu",
+      "country": "India"
+    },
+    {
+      "id": "104",
+      "district": "Chengalpattu",
+      "location": [
+        "Sholinganallur",
+        "Pallavaram",
+        "Tamabaram",
+        "Chengalpattu",
+        "Thiruporur",
+        "Madhuranthagam",
+        "Seiyur"
+      ],
+      "state": "Tamil Nadu",
+      "country": "India"
+    },
+    {
+      "id": "105",
+      "district": "Vellore",
+      "location": [
+        "Vellore",
+        "Anaikattu",
+        "Katpadi",
+        "Keelvainthanan Kuppam",
+        "Gudiyatham"
+      ],
+      "state": "Tamil Nadu",
+      "country": "India"
+    },
+    {
+      "id": "106",
+      "district": "Thirupathur",
+      "location": [
+        "Vaniyambadi",
+        "Ambur",
+        "Jolarpettai",
+        "Thirupathur"
+      ],
+      "state": "Tamil Nadu",
+      "country": "India"
+    },
+    {
+      "id": "107",
+      "district": "Ranipettai",
+      "location": [
+        "Arakkonam",
+        "Arcot",
+        "Sholingar",
+        "Ranipettai"
+      ],
+      "state": "Tamil Nadu",
+      "country": "India"
+    },
+    {
+      "id": "108",
+      "district": "Krishnagiri",
+      "location": [
+        "Oothangarai",
+        "Bargur",
+        "Krishnagiri",
+        "Veppanahalli",
+        "Hosur",
+        "Thali"
+      ],
+      "state": "Tamil Nadu",
+      "country": "India"
+    },
+    {
+      "id": "109",
+      "district": "Dharmapuri",
+      "location": [
+        "Pennagaram",
+        "Palakodu",
+        "Arur",
+        "Pappirettipatti",
+        "Dharmapuri"
+      ],
+      "state": "Tamil Nadu",
+      "country": "India"
+    },
+  {
+    "id": "110",
+    "district": "Thiruvannamalai",
+    "location": [
+      "Chengam",
+      "Thiruvannamalai",
+      "Keelaponnathur",
+      "Kalasapakkam",
+      "Polur",
+      "Aarani",
+      "Seiyaru",
+      "Vandhavasi"
+    ],
+    "state": "Tamil Nadu",
+    "country": "India"
+  },
+  {
+    "id": "111",
+    "district": "Villupuram",
+    "location": [
+      "Chenji",
+      "Mayilam",
+      "Tindivanam",
+      "Vanoor",
+      "Villupuram",
+      "Vikkiravandi"
+    ],
+    "state": "Tamil Nadu",
+    "country": "India"
+  },
+  {
+    "id": "112",
+    "district": "Kallakuruchi",
+    "location": [
+      "Thirukovilur",
+      "Ulundurpettai",
+      "Rishivandhiyam",
+      "Sankarapuram",
+      "Kallakuruchi"
+    ],
+    "state": "Tamil Nadu",
+    "country": "India"
+  },
+  {
+    "id": "113",
+    "district": "Salem",
+    "location": [
+      "Kangavalli",
+      "Aathur",
+      "Yercaud",
+      "Omalur",
+      "Mettur",
+      "Edapadi",
+      "Sangagiri",
+      "Salem-West",
+      "Salem-North",
+      "Salem-South",
+      "Veerapandi"
+    ],
+    "state": "Tamil Nadu",
+    "country": "India"
+  },
+  {
+    "id": "114",
+    "district": "Namakkal",
+    "location": [
+      "Rasipuram",
+      "Senthamangalam",
+      "Namakkal",
+      "Paramathi Velur",
+      "Tiruchengode",
+      "Kumarapalayam"
+    ],
+    "state": "Tamil Nadu",
+    "country": "India"
+  },
+  {
+    "id": "115",
+    "district": "Erode",
+    "location": [
+      "Erode (East)",
+      "Erode (West)",
+      "Modakkurichi",
+      "Perundurai",
+      "Bhavani",
+      "Anthiyur",
+      "Gobichettipalayam",
+      "Bhavanisagar"
+    ],
+    "state": "Tamil Nadu",
+    "country": "India"
+  },
+  {
+    "id": "116",
+    "district": "Nilgris",
+    "location": [
+      "Udhagamandalam",
+      "Gudalur",
+      "Coonoor"
+    ],
+    "state": "Tamil Nadu",
+    "country": "India"
+  },
+  {
+    "id": "117",
+    "district": "Coimbatore",
+    "location": [
+      "Mettupalayam",
+      "Sulur",
+      "Kavundampalayam",
+      "Coimbatore (North)",
+      "Thondamuthur",
+      "Coimbatore (South)",
+      "Singanallur",
+      "Kinathukadavu",
+      "Pollachi",
+      "Valparai"
+    ],
+    "state": "Tamil Nadu",
+    "country": "India"
+  },
+  {
+    "id": "118",
+    "district": "Tiruppur",
+    "location": [
+      "Dharapuram",
+      "Kangayam",
+      "Avanashi",
+      "Tiruppur North",
+      "Tiruppur South",
+      "Palladam",
+      "Udumalaipettai",
+      "Madathukulam"
+    ],
+    "state": "Tamil Nadu",
+    "country": "India"
+  },
+  {
+    "id": "119",
+    "district": "Dindigul",
+    "location": [
+      "Palani",
+      "Oddenchatram",
+      "Athoor",
+      "Nilakkottai",
+      "Natham",
+      "Dindigul",
+      "Vedasandur"
+    ],
+    "state": "Tamil Nadu",
+    "country": "India"
+  },
+  {
+    "id": "120",
+    "district": "Karur",
+    "location": [
+      "Aravakaurichi",
+      "Karur",
+      "Krishnarayapuram",
+      "Kulithalai"
+    ],
+    "state": "Tamil Nadu",
+    "country": "India"
+  },
+  {
+    "id": "121",
+    "district": "Tiruchirappalli",
+    "location": [
+      "Manapparai",
+      "Srirangam",
+      "Tiruchirappalli (West)",
+      "Tiruchirappalli (East)",
+      "Thiruverumbur",
+      "Lalgudi",
+      "Manachanallur",
+      "Musiri",
+      "Thuraiyur"
+    ],
+    "state": "Tamil Nadu",
+    "country": "India"
+  },
+  {
+    "id": "122",
+    "district": "Perambalur",
+    "location": [
+      "Perambalur",
+      "Kunnam"
+    ],
+    "state": "Tamil Nadu",
+    "country": "India"
+  },
+  {
+    "id": "123",
+    "district": "Ariyalur",
+    "location": [
+      "Ariyalur",
+      "Jayankondam"
+    ],
+    "state": "Tamil Nadu",
+    "country": "India"
+  },
+  {
+    "id": "124",
+    "district": "Cuddalore",
+    "location": [
+      "Tittagudi",
+      "Vridhachalam",
+      "Neyveli",
+      "Panruti",
+      "Cuddalore",
+      "Kurinjipadi",
+      "Bhuvanagiri",
+      "Chidambaram",
+      "Kattumannarkoil"
+    ],
+    "state": "Tamil Nadu",
+    "country": "India"
+  },
+  {
+    "id": "125",
+    "district": "Nagapattinam",
+    "location": [
+      "Sirkali",
+      "Mayiladuthurai",
+      "Poompuhar",
+      "Nagapattinam",
+      "Kilvelur",
+      "Vedharanyam"
+    ],
+    "state": "Tamil Nadu",
+    "country": "India"
+  }
+]
