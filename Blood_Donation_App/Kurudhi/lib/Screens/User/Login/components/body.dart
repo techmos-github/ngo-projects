@@ -59,6 +59,14 @@ class _LoginFormState extends State<LoginFormBody> {
                     ),
                     border: InputBorder.none,
                   ),
+                  /*validator: (String? value) {
+                    if (value
+                        .toString()
+                        .trim()
+                        .isEmpty) {
+                      return 'Email is required';
+                    }
+                  },*/
                 ),
               ),
 
@@ -83,6 +91,14 @@ class _LoginFormState extends State<LoginFormBody> {
                     ),
                     border: InputBorder.none,
                   ),
+                  /*validator: (String? value) {
+                    if (value
+                        .toString()
+                        .trim()
+                        .isEmpty) {
+                      return 'Password is required';
+                    }
+                  },*/
                 ),
               ),
               //RoundedPasswordField(

@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:group_radio_button/group_radio_button.dart';
 import 'package:dropdown_search/dropdown_search.dart';
-
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
@@ -58,7 +57,8 @@ class _RequestFormState extends State<RequestForm> {
   String _verticalGroupValue = "Blood";
   List<String> _status = ["Blood", "Platelets"];
   String selectedDistrict = "";
-  List<String> matchLocations = [];
+  List<String>? matchLocations = [];
+  String? selectedGender;
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +105,24 @@ class _RequestFormState extends State<RequestForm> {
                         return 'Patient Age is required';
                       }
                     },
+                  ),
+
+                  const SizedBox(height: 16.0),
+                  DropdownButtonFormField<String>(
+                    value: selectedGender,
+                    decoration: InputDecoration(
+                      labelText: 'Gender', border: OutlineInputBorder(),),
+                    onChanged: (selectedBloodGroup) =>
+                        setState(() => selectedBloodGroup = selectedGender),
+                    validator: (value) => value == null ? 'Gender is required' : null,
+                    items:
+                    ['Male', 'Female', 'Others'].map<DropdownMenuItem<String>>((
+                        String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
                   ),
 
                   const SizedBox(height: 16.0),
@@ -175,9 +193,36 @@ class _RequestFormState extends State<RequestForm> {
                   ),
 
                   const SizedBox(height: 16.0),
+                  DropdownButtonFormField<String>(
+                    value: selectedGender,
+                    decoration: InputDecoration(
+                      labelText: 'Request Status', border: OutlineInputBorder(),),
+                    onChanged: (selectedBloodGroup) =>
+                        setState(() => selectedBloodGroup = selectedGender),
+                    validator: (value) => value == null ? 'Status is required' : null,
+                    items:
+                    ['Normal', 'Emergency', 'Critical'].map<DropdownMenuItem<String>>((
+                        String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+
+                  const SizedBox(height: 16.0),
                   DateTimeField(
                     decoration: InputDecoration(
-                      labelText: 'Date', border: OutlineInputBorder(),),
+                      labelText: 'Due Date', border: OutlineInputBorder(),
+                    ),
+                    validator: (DateTime? value) {
+                      if (value
+                          .toString()
+                          .trim()
+                          .isEmpty) {
+                        return 'Due Date is required';
+                      }
+                    },
                     format: format,
                     onShowPicker: (context, currentValue) async {
                       final date = await showDatePicker(
@@ -247,6 +292,7 @@ class _RequestFormState extends State<RequestForm> {
                       }
                     },
                   ),
+
                   const SizedBox(height: 16.0),
                   TextFormField(
                     decoration: const InputDecoration(
@@ -262,99 +308,37 @@ class _RequestFormState extends State<RequestForm> {
                       }
                     },
                   ),
-                  const SizedBox(height: 16.0),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Location',
-                      border: OutlineInputBorder(),
-                    ),
-                    validator: (String? value) {
-                      if (value
-                          .toString()
-                          .trim()
-                          .isEmpty) {
-                        return 'Location is required';
-                      }
-                    },
-                    onTap: () {
-                      //Navigator.pop(context);
-                      /*Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return LocationSelection();
-                  },
-                ),
-              );*/
-                    },
-                  ),
-
 
                   const SizedBox(height: 16.0),
                   DropdownSearch<String>(
                     mode: Mode.DIALOG,
                     items: (_locations.map((value) =>
                         value.district.toString())).toList().cast<String>(),
-                    /*
-                    items: [
-                      "Puducherry",
-                      "Tiruvallur",
-                      "Chennai",
-                      "Kanchipuram",
-                      "Chengalpattu",
-                      "Vellore",
-                      "Tirupati",
-                      "Ranipettai",
-                      "Krishnagiri",
-                      "Dharmapuri",
-                      "Thiruvannamalai",
-                      "Villupuram",
-                      "Kallakurichi",
-                      "Salem",
-                      "Namakkal",
-                      'Erode',
-                      "Nilgiris",
-                      "Coimbatore",
-                      "Thirupur",
-                      "Dindigul",
-                      "Karur",
-                      "Tiruchirappalli",
-                      "Perambalur",
-                      "Ariyalur",
-                      "Cuddalore",
-                      "Nagapattinam",
-                      "Thiruvarur",
-                      "Pudukkottai",
-                      "Sivagangai",
-                      "Madurai",
-                      "Theni",
-                      "Virudhunagar",
-                      "Ramanadhapuram",
-                      "Thoothukudi",
-                      "Thenkasi",
-                      "Thirunelveli",
-                      "Kanyakumari",
-                    ],
-                      */
                     dropdownSearchDecoration: InputDecoration(
                         labelText: "Select District",
                         contentPadding: EdgeInsets.fromLTRB(12, 12, 0, 0),
                         border: OutlineInputBorder(),
                         hintText: "Select a district"
                     ),
+                    validator: (String? value) {
+                      if (value
+                          .toString()
+                          .trim()
+                          .isEmpty) {
+                        return 'District is required';
+                      }
+                    },
                     selectedItem: selectedDistrict,
                     onChanged: (selectedValue) {
                       setState(() {
+                        matchLocations = null;
                         selectedDistrict = selectedValue.toString();
-                        final matchedLocations = (_locations.where((
-                            element) => element.district == selectedDistrict))
-                            .map((value) => value.location).toList()
+                        matchLocations = _locations
+                            .where((x) => x.district == selectedDistrict)
+                            .map((value) => value.location)
+                            .first
+                            .toList()
                             .cast<String>();
-                        // .map((value) => value.location).cast<String>()).toList();x`
-                        matchLocations = (_locations.where((element) => element.district.toLowerCase() == selectedDistrict.toLowerCase())).toList().cast<String>().toList();
-                        //matchLocations = _locations.where((i) =>
-                        //i.district == selectedDistrict).map((value) =>
-                        //value.location).cast<String>().toList();
                       });
                     },
                     showSearchBox: true,
@@ -394,17 +378,24 @@ class _RequestFormState extends State<RequestForm> {
                       ),
                     ),
                   ),
-                  Divider(),
 
                   const SizedBox(height: 16.0),
                   DropdownSearch<String>(
                     mode: Mode.DIALOG,
-                    items: matchLocations.cast<String>(),
+                    items: matchLocations?.cast<String>(),
                     dropdownSearchDecoration: InputDecoration(
                       labelText: "Select Location",
                       contentPadding: EdgeInsets.fromLTRB(12, 12, 0, 0),
                       border: OutlineInputBorder(),
                     ),
+                    validator: (String? value) {
+                      if (value
+                          .toString()
+                          .trim()
+                          .isEmpty) {
+                        return 'Location is required';
+                      }
+                    },
                     onChanged: print,
                     selectedItem: "",
                     showSearchBox: true,
@@ -444,10 +435,8 @@ class _RequestFormState extends State<RequestForm> {
                       ),
                     ),
                   ),
-                  Divider(),
 
                   //LocationSelection(key: _formKey),
-
                   const SizedBox(height: 36.0),
                   ElevatedButton(
                     onPressed: () {
