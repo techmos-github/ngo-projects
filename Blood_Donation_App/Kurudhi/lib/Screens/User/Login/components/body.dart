@@ -52,7 +52,7 @@ class _LoginFormState extends State<LoginFormBody> {
                 child: TextField(
                   cursorColor: kPrimaryColor,
                   decoration: InputDecoration(
-                    hintText: "Your Email",
+                    hintText: "Your Email/Mobile No.",
                     icon: Icon(
                       Icons.person,
                       color: kPrimaryColor,

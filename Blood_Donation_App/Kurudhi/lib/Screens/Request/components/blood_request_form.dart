@@ -54,7 +54,8 @@ class _RequestFormState extends State<RequestForm> {
   bool _agreedToTOS = true;
   String? selectedBloodGroup;
   final format = DateFormat("yyyy-MM-dd HH:mm");
-  String _verticalGroupValue = "Blood";
+  String selectedRequestType = "Blood";
+  String selectedRequestStatus = "Normal";
   List<String> _status = ["Blood", "Platelets"];
   String selectedDistrict = "";
   List<String>? matchLocations = [];
@@ -94,6 +95,22 @@ class _RequestFormState extends State<RequestForm> {
                   const SizedBox(height: 16.0),
                   TextFormField(
                     decoration: const InputDecoration(
+                      labelText: 'Patient Admission ID',
+                      border: OutlineInputBorder(),
+                    ),
+                    /*validator: (String? value) {
+                      if (value
+                          .toString()
+                          .trim()
+                          .isEmpty) {
+                        return 'Patient Admission Id is required';
+                      }
+                    },*/
+                  ),
+
+                  const SizedBox(height: 16.0),
+                  TextFormField(
+                    decoration: const InputDecoration(
                       labelText: 'Patient Age',
                       border: OutlineInputBorder(),
                     ),
@@ -126,20 +143,21 @@ class _RequestFormState extends State<RequestForm> {
                   ),
 
                   const SizedBox(height: 16.0),
-                  const Text('Request Type'),
-                  const SizedBox(height: 16.0),
-                  RadioGroup<String>.builder(
-                    direction: Axis.horizontal,
-                    groupValue: _verticalGroupValue,
-                    onChanged: (value) =>
-                        setState(() {
-                          _verticalGroupValue = value != null ? value : "";
-                        }),
-                    items: _status,
-                    itemBuilder: (item) =>
-                        RadioButtonBuilder(
-                          item,
-                        ),
+                  DropdownButtonFormField<String>(
+                    value: selectedRequestType,
+                    decoration: InputDecoration(
+                      labelText: 'Request Type', border: OutlineInputBorder(),),
+                    onChanged: (selectedBloodGroup) =>
+                        setState(() => selectedBloodGroup = selectedRequestType),
+                    validator: (value) => value == null ? 'Request Type is required' : null,
+                    items:
+                    ['Blood', 'Platelets', 'Others'].map<DropdownMenuItem<String>>((
+                        String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
                   ),
 
                   const SizedBox(height: 16.0),
@@ -194,11 +212,11 @@ class _RequestFormState extends State<RequestForm> {
 
                   const SizedBox(height: 16.0),
                   DropdownButtonFormField<String>(
-                    value: selectedGender,
+                    value: selectedRequestStatus,
                     decoration: InputDecoration(
                       labelText: 'Request Status', border: OutlineInputBorder(),),
                     onChanged: (selectedBloodGroup) =>
-                        setState(() => selectedBloodGroup = selectedGender),
+                        setState(() => selectedBloodGroup = selectedRequestStatus),
                     validator: (value) => value == null ? 'Status is required' : null,
                     items:
                     ['Normal', 'Emergency', 'Critical'].map<DropdownMenuItem<String>>((

@@ -32,16 +32,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  int _selectedIndex = 0;
 
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static  List<Widget> _widgetOptions = <Widget>[
-    Text(
+    /*Text(
       'Index 0: Home',
       style: optionStyle,
-    ),
+    ),*/
     Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
       SizedBox(height: 20.0),
      // Text('Request', textAlign: TextAlign.center, style: TextStyle(fontSize: 22)),
@@ -89,7 +87,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
     Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
       SizedBox(height: 20.0),
-      //Text('Donate', textAlign: TextAlign.center, style: TextStyle(fontSize: 22)),
       DefaultTabController(
           length: 2, // length of tabs
           initialIndex: 0,
@@ -129,7 +126,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
     setState(() {
-      _counter++;
     });
   }
 
@@ -150,10 +146,10 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.red,
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
+          /*BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
-          ),
+          ),*/
           BottomNavigationBarItem(
             icon: Icon(Icons.medical_services),
             label: 'Request',

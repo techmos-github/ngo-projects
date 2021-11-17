@@ -4,14 +4,34 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:kurudhi/model/blood_request_model.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart';
+import 'dart:async' show Future;
 
 class ApprovalPendingRequest extends StatelessWidget {
+
+  Future<List<BloodRequest>> ReadJsonData() async {
+    //read json file
+    final jsondata = await rootBundle.loadString('assets/bloodrequest.json');
+    //decode json data as list
+    final list = json.decode(jsondata) as List<dynamic>;
+
+    //map json and initialize using DataModel
+    return list.map((e) => BloodRequest.fromJson(e)).toList();
+  }
+
   Future<List<BloodRequest>> fetchRaisedRequest(http.Client client) async {
     final response = await client
         .get(Uri.parse('https://jsonplaceholder.typicode.com/photos'));
 
     // Use the compute function to run parsePhotos in a separate isolate.
     return compute(parseRaisedRequest, response.body);
+  }
+
+  Future<List<BloodRequest>> readRaisedRequestJson() async {
+    final String response = await rootBundle.loadString(
+        'assets/bloodrequest.json');
+    return compute(parseRaisedRequest, response);
   }
 
   // A function that converts a response body into a List<Photo>.
@@ -22,169 +42,108 @@ class ApprovalPendingRequest extends StatelessWidget {
         .toList();
   }
 
-  final List<String> entries = <String>[
-    'A',
-    'B',
-    'C',
-    'A',
-    'B',
-    'C',
-    'A',
-    'B',
-    'C',
-    'A',
-    'B',
-    'C',
-    'A',
-    'B',
-    'C',
-    'A',
-    'B'
-  ];
-  final List<String> names = <String>[
-    'Guru Charan',
-    'Rajesh Kumar',
-    'Manikandan',
-    'Dinesh',
-    'Sukumar',
-    'Guru',
-    'Charan',
-    'Mani',
-    'Dinesh',
-    'Sukumar',
-    'Sukumar',
-    'Guru',
-    'Charan',
-    'Mani',
-    'Dinesh',
-    'Sukumar',
-    'Guru',
-  ];
-  final List<int> colorCodes = <int>[
-    600,
-    500,
-    100,
-    600,
-    500,
-    100,
-    600,
-    500,
-    100,
-    600,
-    500,
-    100,
-    600,
-    500,
-    100,
-    600,
-    500
-  ];
-
-  final List dummyList = List.generate(17, (index) {
-    return {
-      "id": index,
-      "title": "This is the title $index",
-      "subtitle": "This is the subtitle $index"
-    };
-  });
-
   //ApprovalPendingRequest({Key? key, required this.raisedRequest}) : super(key: key);
   //final List<BloodRequest> raisedRequest;
   ApprovalPendingRequest({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: const EdgeInsets.all(8),
-      itemCount: entries.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Container(
-          height: 100,
-          color: Colors.black12,
-          //child: Center(child: Text('Entry ${entries[index]}')),
-          child: Card(
-            child: ListTile(
-              /*leading: CircleAvatar(
-                backgroundColor: Colors.amber,
-                child: Text(entries[index].toString()),
-              ),*/
-              leading: CircleAvatar(
-                child: Text(dummyList[index]["id"].toString()),
-                backgroundColor: Colors.amber,
-              ),
-              title: Text(
-                  'Name:  ${names[index]} ' '  Age:  ${colorCodes[index]}'),
-              //subtitle: Text(
-              //  'A sufficiently long subtitle warrants three lines.'
-              //),
-              subtitle:
-              Column(children: <Widget>[
-                Row(
-                  //mainAxisSize: MainAxisSize.min,
-                  //crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                        'Units required: ${dummyList[index]["id"].toString()}'
-                    ),
-                  ],
-                ),
-                Row(
-                  //mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                        'Location: ${dummyList[index]["id"].toString()}'
-                    ),
-                  ],
-                ),
-                Row(
-                  //mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                        'Status: Critical'
-                    ),
-                  ],
-                ),
-              ]),
+    return FutureBuilder(
+        future: ReadJsonData(),
+        builder: (context, data) {
+          if (data.hasError) {
+            return Center(child: Text("${data.error}"));
+          } else if (data.hasData) {
+            var items = data.data as List<BloodRequest>;
+            return ListView.separated(
+              padding: const EdgeInsets.all(8),
+              itemCount: items.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  height: 100,
+                  color: Colors.black12,
+                  child: Card(
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        child: Text(items[index].bloodgroup.toString()),
+                        backgroundColor: Colors.amber,
+                      ),
+                      title: Text('Name:  ${items[index].patientname
+                          .toString()} ' '  Age:  ${items[index].age
+                          .toString()} '),
 
-              //trailing: Icon(Icons.more_vert),
-              trailing: PopupMenuButton(
-                itemBuilder: (context) {
-                  return [
-                    PopupMenuItem(
-                      value: 'edit',
-                      //child: Text('Edit'),
-                      child: ListTile(
-                        leading: Icon(Icons.edit_outlined),
-                        title: Text('Edit'),
+                      subtitle:
+                      Column(children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                                'Units required: ${items[index].units
+                                    .toString() }'
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                                'Location: ${items[index].location }'
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                                'Status: ${items[index].status }'
+                            ),
+                          ],
+                        ),
+                      ]),
+
+                      //trailing: Icon(Icons.more_vert),
+                      trailing: PopupMenuButton(
+                        itemBuilder: (context) {
+                          return [
+                            PopupMenuItem(
+                              value: 'edit',
+                              child: ListTile(
+                                leading: Icon(Icons.edit_outlined),
+                                title: Text('Edit'),
+                              ),
+                            ),
+                            PopupMenuItem(
+                              value: 'delete',
+                              child: ListTile(
+                                leading: Icon(Icons.auto_delete_outlined),
+                                title: Text('Delete'),
+                              ),
+                            ),
+                            PopupMenuItem(
+                              value: 'approve',
+                              child: ListTile(
+                                leading: Icon(Icons.approval),
+                                title: Text('Approve'),
+                              ),
+                            )
+                          ];
+                        },
+                        onSelected: (String value) => actionPopUpItemSelected(),
                       ),
+                      isThreeLine: false,
                     ),
-                    PopupMenuItem(
-                      value: 'delete',
-                      child: ListTile(
-                        leading: Icon(Icons.auto_delete_outlined),
-                        title: Text('Delete'),
-                      ),
-                    ),
-                    PopupMenuItem(
-                      value: 'approve',
-                      child: ListTile(
-                        leading: Icon(Icons.approval),
-                        title: Text('Approve'),
-                      ),
-                    )
-                  ];
-                },
-                onSelected: (String value) => actionPopUpItemSelected(),
-              ),
-              isThreeLine: false,
-            ),
-          ),
-        );
-      },
-      separatorBuilder: (BuildContext context,
-          int index) => const Divider(),
+                  ),
+                );
+              },
+              separatorBuilder: (BuildContext context,
+                  int index) => const Divider(),
+            );
+          }
+          else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        }
     );
   }
 

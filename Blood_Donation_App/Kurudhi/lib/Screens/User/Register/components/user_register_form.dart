@@ -151,7 +151,6 @@ class _RegisterFormState extends State<RegisterForm> {
                       'A',
                       'B',
                       'AB',
-                      '0',
                       'A+',
                       'A-',
                       'B+',
@@ -383,6 +382,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
   void _submit() {
     _formKey.currentState?.validate();
+    RegisterUser();
     print('Form submitted');
   }
 
@@ -390,5 +390,20 @@ class _RegisterFormState extends State<RegisterForm> {
     setState(() {
       _agreedToTOS = newValue == null ? false : newValue;
     });
+  }
+
+  Future<http.Response> RegisterUser() async {
+    String url = "https://jsonplaceholder.typicode.com/posts";
+    final response = await http.get(
+        Uri.parse('https://localhost:5001/api/user'));
+    return http.get(
+      Uri.parse('https://localhost:5001/api/user'),
+      //headers: <String, String>{
+      //'Content-Type': 'application/json; charset=UTF-8',
+      //},
+      //body: jsonEncode(<String, String>{
+      // 'title': title,
+      //}),
+    );
   }
 }

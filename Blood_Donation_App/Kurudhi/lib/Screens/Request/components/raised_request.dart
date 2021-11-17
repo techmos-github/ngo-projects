@@ -48,6 +48,7 @@ class RaisedRequest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     Future<List<BloodRequest>> _items = readRaisedRequestJson();
 
     return FutureBuilder(
@@ -71,11 +72,10 @@ class RaisedRequest extends StatelessWidget {
                         child: Text(items[index].bloodgroup.toString()),
                         backgroundColor: Colors.amber,
                       ),
-                      title: Text(
-                          'Name:  ${items[index].patientname.toString()} ' '  Age:  ${items[index].age.toString()} '),
-                      //subtitle: Text(
-                      //  'A sufficiently long subtitle warrants three lines.'
-                      //),
+
+                      title:
+                      Text('Name:  ${items[index].patientname.toString()} ' '  Age:  ${items[index].age.toString()} '),
+
                       subtitle:
                       Column(children: <Widget>[
                         Row(

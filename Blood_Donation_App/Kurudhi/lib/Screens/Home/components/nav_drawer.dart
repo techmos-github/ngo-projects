@@ -45,7 +45,7 @@ class NavDrawer extends StatelessWidget {
               //Navigator.of(context).pop()
             },
           ),
-          ListTile(
+          /*ListTile(
             leading: Icon(Icons.watch_later_outlined),
             title: Text('My Activity'),
             onTap: () => {Navigator.of(context).pop()},
@@ -54,23 +54,25 @@ class NavDrawer extends StatelessWidget {
             leading: Icon(Icons.verified_outlined),
             title: Text('Pending For Approval'),
             onTap: () => {Navigator.of(context).pop()},
-          ),
+          ),*/
           ListTile(
             leading: Icon(Icons.local_activity),
             title: Text('Donation History'),
             onTap: () => {Navigator.of(context).pop()},
           ),
+          /*
           ListTile(
             leading: Icon(Icons.settings),
             title: Text('Settings'),
             onTap: () => {Navigator.of(context).pop()},
           ),
-
           ListTile(
             leading: Icon(Icons.border_color),
             title: Text('Feedback'),
             onTap: () => {Navigator.of(context).pop()},
           ),
+          */
+
           ListTile(
             leading: Icon(Icons.exit_to_app),
             title: Text('Logout'),
