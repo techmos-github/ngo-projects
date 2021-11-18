@@ -41,5 +41,11 @@ namespace Kurudhi.Controllers
             var users = _userService.UpdateUser(user);
             return Ok(users);
         }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok(new User { Id = 1, FirstName = "TestFirst", LastName = "TestFirst" });
+        }
     }
 }

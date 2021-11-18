@@ -34,7 +34,7 @@ namespace Kurudhi
         public void ConfigureServices(IServiceCollection services)
         {
             string mySqlConnectionStr = Configuration.GetConnectionString("KurudhiDB");
-            services.AddDbContextPool<Kurudhi_DBContext>(options => options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
+            services.AddDbContext<Kurudhi_DBContext>(options => options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
             services.AddCors();
             services.AddControllers();
 
