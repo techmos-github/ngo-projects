@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:kurudhi/Screens/Admin/manage_user_screen.dart';
+import 'package:kurudhi/Screens/Admin/search_donor_screen.dart';
 import '/Screens/User/Login/login_screen.dart';
 import '/Screens/User/Profile/user_profile_page.dart';
-import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 
 class NavDrawer extends StatelessWidget {
   @override
@@ -59,6 +60,36 @@ class NavDrawer extends StatelessWidget {
             leading: Icon(Icons.local_activity),
             title: Text('Donation History'),
             onTap: () => {Navigator.of(context).pop()},
+          ),
+          ListTile(
+            leading: Icon(Icons.manage_accounts),
+            title: Text('Manage Users'),
+            onTap: () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return Manage_User_Screen();
+                  },
+                ),
+              )
+              //Navigator.of(context).pop()
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.people_alt),
+            title: Text('Search Donors'),
+            onTap: () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return Search_Donor_Screen();
+                  },
+                ),
+              )
+              //Navigator.of(context).pop()
+            },
           ),
           /*
           ListTile(
