@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Kurudhi.Services;
 using Kurudhi.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Kurudhi.Controllers
 {
@@ -26,26 +28,29 @@ namespace Kurudhi.Controllers
             return Ok(response);
         }
 
-        [Authorize]
         [HttpPost]
-        public IActionResult AddUser(User user)
+        public async Task<IActionResult> AddUser(User user)
         {
-            var users = _userService.AddUser(user);
+            var users = await _userService.AddUser(user).ConfigureAwait(false);
             return Ok(users);
         }
 
         [Authorize]
         [HttpPatch]
-        public IActionResult UpdateUser(User user)
+        public async Task<IActionResult> UpdateUser(User user)
         {
-            var users = _userService.UpdateUser(user);
+            var users = await _userService.UpdateUser(user).ConfigureAwait(false);
             return Ok(users);
         }
 
+        [Authorize]
         [HttpGet]
-        public IActionResult Get()
+#nullable enable
+        public async Task<IActionResult> GetUsers(string? district)
         {
-            return Ok(new User { Id = 1, FirstName = "TestFirst", LastName = "TestFirst" });
+            IList<User> usersLists = await _userService.GetAllUsersbydistrict(district).ConfigureAwait(false);
+#nullable disable
+            return Ok(usersLists);
         }
     }
 }

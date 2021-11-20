@@ -19,6 +19,7 @@ namespace Kurudhi.Services
         Task<User> AddUser(User user);
         Task<User> UpdateUser(User user);
         Task<User> GetUserById(int Id);
+        Task<IList<User>> GetAllUsersbydistrict(string? district);
     }
 
     public class UserService : IUserService
@@ -48,6 +49,13 @@ namespace Kurudhi.Services
         public async Task<User> AddUser(User user) => await _users.AddUser(user).ConfigureAwait(false);
         public async Task<User> UpdateUser(User user) => await _users.UpdateUser(user).ConfigureAwait(false);
         public async Task<User> GetUserById(int Id) => await _users.GetUserbyId(Id).ConfigureAwait(false);
+        
+        #nullable enable
+        public async Task<IList<User>> GetAllUsersbydistrict(string? district)
+        {
+            return string.IsNullOrEmpty(district) ? await _users.GetAllUsers().ConfigureAwait(false) : await _users.GetUsersbyDistrict(district).ConfigureAwait(false);
+        #nullable disable
+        }
 
         #region private
         private string generateJwtToken(User user)

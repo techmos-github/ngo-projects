@@ -38,10 +38,15 @@ namespace Kurudhi
             services.AddCors();
             services.AddControllers();
 
+            services.AddSwaggerGen();
+
+
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
             // configure DI for application services
             services.AddScoped<IUser, UserFeature>();
+            services.AddScoped<IBloodRequest, BloodRequestFeature>();
+            services.AddScoped<IBloodRequestService, BloodRequestService>();
             services.AddScoped<IUserService, UserService>();
         }
 
@@ -51,6 +56,8 @@ namespace Kurudhi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
             app.UseHttpsRedirection();
             app.UseRouting();
