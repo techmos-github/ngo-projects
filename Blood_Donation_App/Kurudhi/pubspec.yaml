@@ -45,6 +45,7 @@ dependencies:
   animated_theme_switcher: ^2.0.1-nullsafety.0
   expansion_tile_card: ^2.0.0
   flutter_share:
+  email_validator: ^1.0.0
 
 dev_dependencies:
   flutter_test:

@@ -101,7 +101,7 @@ class Manage_User extends StatelessWidget {
                           //mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                                'Status: ${items[index].status }'
+                                'Status: ${items[index].medicalstatus }'
                             ),
                           ],
                         ),

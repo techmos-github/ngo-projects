@@ -214,10 +214,10 @@ class _RequestFormState extends State<RequestForm> {
                   DropdownButtonFormField<String>(
                     value: selectedRequestStatus,
                     decoration: InputDecoration(
-                      labelText: 'Request Status', border: OutlineInputBorder(),),
+                      labelText: 'Medical Status', border: OutlineInputBorder(),),
                     onChanged: (selectedBloodGroup) =>
                         setState(() => selectedBloodGroup = selectedRequestStatus),
-                    validator: (value) => value == null ? 'Status is required' : null,
+                    validator: (value) => value == null ? 'Medical status is required' : null,
                     items:
                     ['Normal', 'Emergency', 'Critical'].map<DropdownMenuItem<String>>((
                         String value) {

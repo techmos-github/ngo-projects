@@ -7,7 +7,7 @@
       "bloodgroup": "O+",
       "units": "3",
       "location": "EELA Hospital, First cross street,Saidapet Chennai -600015,",
-      "status": "Critical"
+      "medicalstatus": "Critical"
     },
     {
       "id": "p2",
@@ -17,7 +17,7 @@
       "bloodgroup": "Any",
       "units": "6",
       "location": "Apollo Hospital, First cross street,Saidapet Chennai -600015,",
-      "status": "Critical"
+      "medicalstatus": "Critical"
     },
     {
       "id": "p3",
@@ -27,7 +27,7 @@
       "bloodgroup": "AB-",
       "units": "1",
       "location": "Mission Hospital, First cross street,Saidapet Chennai -600015,",
-      "status": "Critical"
+      "medicalstatus": "Critical"
     },
     {
       "id": "p4",
@@ -37,7 +37,7 @@
       "bloodgroup": "B+",
       "units": "3",
       "location": "Kauvery Hospital, First cross street,Saidapet Chennai -600015,",
-      "status": "Critical"
+      "medicalstatus": "Critical"
     },
     {
       "id": "p5",
@@ -47,7 +47,7 @@
       "bloodgroup": "Any",
       "units": "6",
       "location": "Apollo Hospital, First cross street,Poonamalle Chennai -600015,",
-      "status": "Critical"
+      "medicalstatus": "Critical"
     },
     {
       "id": "p6",
@@ -57,7 +57,7 @@
       "bloodgroup": "AB-",
       "units": "1",
       "location": "Rajiv Gandhi Government Hospital, First cross street,Mount Road Chennai -600015,",
-      "status": "Critical"
+      "medicalstatus": "Critical"
     },
     {
       "id": "p7",
@@ -67,7 +67,7 @@
       "bloodgroup": "Any",
       "units": "3",
       "location": "EELA Hospital, First cross street,Saidapet Chennai -600015,",
-      "status": "Critical"
+      "medicalstatus": "Critical"
     },
     {
       "id": "p8",
@@ -77,7 +77,7 @@
       "bloodgroup": "A+",
       "units": "6",
       "location": "Apollo Hospital, First cross street,Saidapet Chennai -600015,",
-      "status": "Critical"
+      "medicalstatus": "Critical"
     },
     {
       "id": "p9",
@@ -87,6 +87,6 @@
       "bloodgroup": "AB-",
       "units": "1",
       "location": "Mission Hospital, First cross street,Saidapet Chennai -600015,",
-      "status": "Critical"
+      "medicalstatus": "Critical"
     }
   ]

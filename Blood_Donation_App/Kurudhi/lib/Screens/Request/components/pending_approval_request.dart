@@ -94,7 +94,7 @@ class ApprovalPendingRequest extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                                'Status: ${items[index].status }'
+                                'Status: ${items[index].medicalstatus }'
                             ),
                           ],
                         ),

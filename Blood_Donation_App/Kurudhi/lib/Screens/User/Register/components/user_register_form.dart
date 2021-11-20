@@ -1,3 +1,4 @@
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:kurudhi/constants.dart';
@@ -10,6 +11,8 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async' show Future;
+import 'package:intl/intl.dart';
+import 'package:email_validator/email_validator.dart';
 
 Future<List<Location>> ReadJsonData() async {
   final jsondata = await rootBundle.loadString('assets/location.json');
@@ -51,6 +54,7 @@ class _RegisterFormState extends State<RegisterForm> {
   String selectedDistrict = "";
   List<String>? matchLocations = [];
   String? selectedGender;
+  final format = DateFormat("yyyy-MM-dd HH:mm");
 
   @override
   Widget build(BuildContext context) {
@@ -121,6 +125,10 @@ class _RegisterFormState extends State<RegisterForm> {
 
                   const SizedBox(height: 16.0),
                   TextFormField(
+                    keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
                     decoration: const InputDecoration(
                       labelText: 'Age',
                       border: OutlineInputBorder(),
@@ -148,9 +156,6 @@ class _RegisterFormState extends State<RegisterForm> {
                         : null,
                     items:
                     [
-                      'A',
-                      'B',
-                      'AB',
                       'A+',
                       'A-',
                       'B+',
@@ -169,6 +174,10 @@ class _RegisterFormState extends State<RegisterForm> {
 
                   const SizedBox(height: 16.0),
                   TextFormField(
+                    keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
                     decoration: const InputDecoration(
                       labelText: 'Mobile Number',
                       border: OutlineInputBorder(),
@@ -189,12 +198,23 @@ class _RegisterFormState extends State<RegisterForm> {
                       labelText: 'Email',
                       border: OutlineInputBorder(),
                     ),
+                    validator: (value) => EmailValidator.validate(value) ? null : "Please enter a valid email",
+                  ),
+
+                  const SizedBox(height: 16.0),
+                  TextFormField(
+                    obscureText: true,
+                    obscuringCharacter: '*',
+                    decoration: const InputDecoration(
+                      labelText: 'Password',
+                      border: OutlineInputBorder(),
+                    ),
                     validator: (String? value) {
                       if (value
                           .toString()
                           .trim()
                           .isEmpty) {
-                        return 'Please enter the valid email';
+                        return 'Password is required';
                       }
                     },
                   ),
@@ -328,6 +348,32 @@ class _RegisterFormState extends State<RegisterForm> {
                     ),
                   ),
                   Divider(),
+
+                  const SizedBox(height: 16.0),
+                  DateTimeField(
+                    decoration: InputDecoration(
+                      labelText: 'Last Donated Date', border: OutlineInputBorder(),
+                    ),
+                    format: format,
+                    onShowPicker: (context, currentValue) async {
+                      final date = await showDatePicker(
+                          context: context,
+                          firstDate: DateTime(1900),
+                          initialDate: currentValue ?? DateTime.now(),
+                          lastDate: DateTime(2100));
+                      if (date != null) {
+                        final time = await showTimePicker(
+                          context: context,
+                          initialTime:
+                          TimeOfDay.fromDateTime(
+                              currentValue ?? DateTime.now()),
+                        );
+                        return DateTimeField.combine(date, time);
+                      } else {
+                        return currentValue;
+                      }
+                    },
+                  ),
 
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),

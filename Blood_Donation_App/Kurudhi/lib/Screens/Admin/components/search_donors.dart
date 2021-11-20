@@ -106,9 +106,6 @@ class _Search_DonorsState extends State<Search_Donors> {
                         : null,
                     items:
                     [
-                      'A',
-                      'B',
-                      'AB',
                       'A+',
                       'A-',
                       'B+',
@@ -329,7 +326,7 @@ class _Search_DonorsState extends State<Search_Donors> {
                                         //mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Text(
-                                              'Status: ${items[index].status }'
+                                              'Status: ${items[index].medicalstatus }'
                                           ),
                                         ],
                                       ),
