@@ -48,11 +48,6 @@ class _LoginFormState extends State<LoginFormBody> {
               "assets/images/logo-round.png",
               height: size.height * 0.30,
             ),
-
-            /*SvgPicture.asset(
-              "assets/images/launch screen logo.jpeg",
-              height: size.height * 0.35,
-            ),*/
             SizedBox(height: size.height * 0.03),
             TextFieldContainer(
               child: TextField(

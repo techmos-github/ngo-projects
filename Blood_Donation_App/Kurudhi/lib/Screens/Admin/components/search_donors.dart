@@ -112,8 +112,16 @@ class _Search_DonorsState extends State<Search_Donors> {
                       'B-',
                       'AB+',
                       'AB-',
+                      'A1+',
+                      'A1-',
+                      'A1B+',
+                      'A1B-',
+                      'A2+',
+                      'A2-',
+                      'A2B+',
+                      'A2B-',
                       'O+',
-                      'O-'
+                      'O-',
                     ].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
@@ -374,6 +382,7 @@ class _Search_DonorsState extends State<Search_Donors> {
                         }
                       }
                   ),
+                  /*
                   GridView.count(
                     crossAxisCount: 1,
                     crossAxisSpacing: 10.0,
@@ -399,7 +408,7 @@ class _Search_DonorsState extends State<Search_Donors> {
                           )
                       );
                     },),
-                  ),
+                  ),*/
                 ],
               ),
             );

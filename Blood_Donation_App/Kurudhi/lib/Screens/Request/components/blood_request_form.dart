@@ -4,10 +4,8 @@ import 'package:kurudhi/model/location_model.dart';
 import 'package:kurudhi/theme.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-import 'package:group_radio_button/group_radio_button.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:kurudhi/model/blood_request_model.dart';
@@ -151,7 +149,7 @@ class _RequestFormState extends State<RequestForm> {
                         setState(() => selectedBloodGroup = selectedRequestType),
                     validator: (value) => value == null ? 'Request Type is required' : null,
                     items:
-                    ['Blood', 'Platelets', 'Others'].map<DropdownMenuItem<String>>((
+                    ['Blood', 'Platelets', 'Plasma'].map<DropdownMenuItem<String>>((
                         String value) {
                       return DropdownMenuItem<String>(
                         value: value,
@@ -174,18 +172,22 @@ class _RequestFormState extends State<RequestForm> {
                     items:
                     [
                       'Any',
-                      'A',
-                      'B',
-                      'AB',
-                      '0',
                       'A+',
                       'A-',
                       'B+',
                       'B-',
                       'AB+',
                       'AB-',
+                      'A1+',
+                      'A1-',
+                      'A1B+',
+                      'A1B-',
+                      'A2+',
+                      'A2-',
+                      'A2B+',
+                      'A2B-',
                       'O+',
-                      'O-'
+                      'O-',
                     ].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,

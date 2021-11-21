@@ -14,7 +14,7 @@ class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Kurudhi Demo',
+      title: 'Kurudhi',
       theme: ThemeData(
         primarySwatch: Colors.red, //#DB1022FF,
         scaffoldBackgroundColor: Colors.white,
@@ -34,54 +34,57 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   int _selectedIndex = 0;
-  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static  List<Widget> _widgetOptions = <Widget>[
+  static const TextStyle optionStyle = TextStyle(
+      fontSize: 30, fontWeight: FontWeight.bold);
+  static List<Widget> _widgetOptions = <Widget>[
     /*Text(
       'Index 0: Home',
       style: optionStyle,
     ),*/
     Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
       SizedBox(height: 20.0),
-     // Text('Request', textAlign: TextAlign.center, style: TextStyle(fontSize: 22)),
+      //Text('Request', textAlign: TextAlign.center, style: TextStyle(fontSize: 22)),
       DefaultTabController(
           length: 3, // length of tabs
           initialIndex: 0,
-          child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-            Container(
-              child: TabBar(
-                labelColor: Colors.green,
-                unselectedLabelColor: Colors.black,
-                tabs: [
-                  Tab(text: 'Raised Request'),
-                  Tab(text: 'Approved Request'),
-                  Tab(text: 'Pending Approval'),
-                ],
-              ),
-            ),
-            Container(
-                height: 500, //height of TabBarView
-                decoration: BoxDecoration(
-                    border: Border(top: BorderSide(color: Colors.grey, width: 0.5))
+          child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Container(
+                  child: TabBar(
+                    labelColor: Colors.green,
+                    unselectedLabelColor: Colors.black,
+                    tabs: [
+                      Tab(text: 'Raised Request',),
+                      Tab(text: 'Approved Request'),
+                      Tab(text: 'Pending Approval'),
+                    ],
+                  ),
                 ),
-                child: TabBarView(children: <Widget>[
-                  Container(
-                    child: Center(
-                        child: RaisedRequest()
+                Container(
+                    height: 500, //height of TabBarView
+                    decoration: BoxDecoration(
+                        border: Border(
+                            top: BorderSide(color: Colors.grey, width: 0.5))
                     ),
-                  ),
-                  Container(
-                    child: Center(
-                        child: ApprovedRequest()
-                    ),
-                  ),
-                  Container(
-                    child: Center(
-                        child: ApprovalPendingRequest()
-                    ),
-                  ),
-                ])
-            )
-          ])
+                    child: TabBarView(children: <Widget>[
+                      Container(
+                        child: Center(
+                            child: RaisedRequest()
+                        ),
+                      ),
+                      Container(
+                        child: Center(
+                            child: ApprovedRequest()
+                        ),
+                      ),
+                      Container(
+                        child: Center(
+                            child: ApprovalPendingRequest()
+                        ),
+                      ),
+                    ])
+                )
+              ])
       ),
     ]),
 
@@ -90,43 +93,44 @@ class _MyHomePageState extends State<MyHomePage> {
       DefaultTabController(
           length: 2, // length of tabs
           initialIndex: 0,
-          child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-            Container(
-              child: TabBar(
-                labelColor: Colors.green,
-                unselectedLabelColor: Colors.black,
-                tabs: [
-                  Tab(text: 'Blood Request (Near Me)'),
-                  Tab(text: 'All Over'),
-                ],
-              ),
-            ),
-            Container(
-                height: 500, //height of TabBarView
-                decoration: BoxDecoration(
-                    border: Border(top: BorderSide(color: Colors.grey, width: 0.5))
+          child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Container(
+                  child: TabBar(
+                    labelColor: Colors.green,
+                    unselectedLabelColor: Colors.black,
+                    tabs: [
+                      Tab(text: 'Blood Request (Near Me)'),
+                      Tab(text: 'All Over'),
+                    ],
+                  ),
                 ),
-                child: TabBarView(children: <Widget>[
-                  Container(
-                    child: Center(
-                        child: RequestNearMe()
+                Container(
+                    height: 500, //height of TabBarView
+                    decoration: BoxDecoration(
+                        border: Border(
+                            top: BorderSide(color: Colors.grey, width: 0.5))
                     ),
-                  ),
-                  Container(
-                    child: Center(
-                        child: RequestAllOver()
-                    ),
-                  ),
-                ])
-            )
-          ])
+                    child: TabBarView(children: <Widget>[
+                      Container(
+                        child: Center(
+                            child: RequestNearMe()
+                        ),
+                      ),
+                      Container(
+                        child: Center(
+                            child: RequestAllOver()
+                        ),
+                      ),
+                    ])
+                )
+              ])
       ),
     ]),
   ];
 
   void _incrementCounter() {
-    setState(() {
-    });
+    setState(() {});
   }
 
   void _onItemTapped(int index) {
@@ -137,7 +141,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       drawer: NavDrawer(),
       appBar: AppBar(
@@ -174,7 +177,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) =>  NewRequest()),
+            MaterialPageRoute(builder: (context) => NewRequest()),
           );
         },
         tooltip: 'Request Blood',

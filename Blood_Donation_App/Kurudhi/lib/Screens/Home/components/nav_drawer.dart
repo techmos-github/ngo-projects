@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kurudhi/Screens/About/about_screen.dart';
 import 'package:kurudhi/Screens/Admin/manage_user_screen.dart';
+import 'package:kurudhi/Screens/Admin/pending_approval_screen.dart';
 import 'package:kurudhi/Screens/Admin/search_donor_screen.dart';
 import '/Screens/User/Login/login_screen.dart';
 import '/Screens/User/Profile/user_profile_page.dart';
@@ -50,16 +52,29 @@ class NavDrawer extends StatelessWidget {
             leading: Icon(Icons.watch_later_outlined),
             title: Text('My Activity'),
             onTap: () => {Navigator.of(context).pop()},
-          ),
-          ListTile(
-            leading: Icon(Icons.verified_outlined),
-            title: Text('Pending For Approval'),
-            onTap: () => {Navigator.of(context).pop()},
           ),*/
+
           ListTile(
             leading: Icon(Icons.local_activity),
             title: Text('Donation History'),
             onTap: () => {Navigator.of(context).pop()},
+          ),
+          Divider(),
+/*
+          ListTile(
+            leading: Icon(Icons.verified_outlined),
+            title: Text('Pending For Approval'),
+            onTap: () =>
+            {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return Pending_Approval_Screen();
+                  },
+                ),
+              )
+            },
           ),
           ListTile(
             leading: Icon(Icons.manage_accounts),
@@ -76,6 +91,7 @@ class NavDrawer extends StatelessWidget {
               //Navigator.of(context).pop()
             },
           ),
+          */
           ListTile(
             leading: Icon(Icons.people_alt),
             title: Text('Search Donors'),
@@ -91,18 +107,35 @@ class NavDrawer extends StatelessWidget {
               //Navigator.of(context).pop()
             },
           ),
+          Divider(),
           /*
           ListTile(
             leading: Icon(Icons.settings),
             title: Text('Settings'),
             onTap: () => {Navigator.of(context).pop()},
           ),
+           */
+          ListTile(
+            leading: Icon(Icons.assignment_ind),
+            title: Text('About Us'),
+            onTap: () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return AboutScreen();
+                  },
+                ),
+              )
+              //Navigator.of(context).pop()
+            },
+          ),
           ListTile(
             leading: Icon(Icons.border_color),
             title: Text('Feedback'),
             onTap: () => {Navigator.of(context).pop()},
           ),
-          */
+
 
           ListTile(
             leading: Icon(Icons.exit_to_app),

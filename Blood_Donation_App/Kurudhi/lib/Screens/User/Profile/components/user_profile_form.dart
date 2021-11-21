@@ -185,8 +185,16 @@ class _UserProfileFormState extends State<UserProfileForm> {
                       'B-',
                       'AB+',
                       'AB-',
+                      'A1+',
+                      'A1-',
+                      'A1B+',
+                      'A1B-',
+                      'A2+',
+                      'A2-',
+                      'A2B+',
+                      'A2B-',
                       'O+',
-                      'O-'
+                      'O-',
                     ].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,

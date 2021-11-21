@@ -1,60 +1,35 @@
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:kurudhi/constants.dart';
-import 'dart:convert';
-import 'package:flutter/services.dart';
-import 'package:dropdown_search/dropdown_search.dart';
-import 'package:kurudhi/model/location_model.dart';
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:kurudhi/model/blood_request_model.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart';
 import 'dart:async' show Future;
 import 'package:intl/intl.dart';
-import 'package:email_validator/email_validator.dart';
+import 'package:kurudhi/model/location_model.dart';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 
-Future<List<Location>> ReadJsonData() async {
-  final jsondata = await rootBundle.loadString('assets/location.json');
-  final list = json.decode(jsondata) as List<dynamic>;
-  return list.map((e) => Location.fromJson(e)).toList();
-}
-
-Future<List<Location>> fetchRaisedRequest(http.Client client) async {
-  final response = await client
-      .get(Uri.parse('https://jsonplaceholder.typicode.com/photos'));
-  // Use the compute function to run parsePhotos in a separate isolate.
-  return compute(parseRaisedRequest, response.body);
-}
-
-Future<List<Location>> readRaisedRequestJson() async {
-  final String response = await rootBundle.loadString('assets/location.json');
-  return compute(parseRaisedRequest, response);
-}
-
-// A function that converts a response body into a List<Photo>.
-List<Location> parseRaisedRequest(String responseBody) {
-  final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-
-  return parsed.map<Location>((json) => Location.fromJson(json))
-      .toList();
-}
-
-class RegisterForm extends StatefulWidget {
-  const RegisterForm({Key? key}) : super(key: key);
+class EditRequest extends StatefulWidget {
+  const EditRequest({Key? key}) : super(key: key);
 
   @override
-  _RegisterFormState createState() => _RegisterFormState();
+  _EditRequestState createState() => _EditRequestState();
 }
 
-class _RegisterFormState extends State<RegisterForm> {
+class _EditRequestState extends State<EditRequest> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _agreedToTOS = true;
   String? selectedBloodGroup;
+  final format = DateFormat("yyyy-MM-dd HH:mm");
+  String selectedRequestType = "Blood";
+  String selectedRequestStatus = "Normal";
+  List<String> _status = ["Blood", "Platelets"];
   String selectedDistrict = "";
   List<String>? matchLocations = [];
   String? selectedGender;
-  final format = DateFormat("yyyy-MM-dd HH:mm");
 
   @override
   Widget build(BuildContext context) {
@@ -68,12 +43,13 @@ class _RegisterFormState extends State<RegisterForm> {
             return Form(
               key: _formKey,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
+
                   const SizedBox(height: 16.0),
                   TextFormField(
                     decoration: const InputDecoration(
-                      labelText: 'First Name',
+                      labelText: 'Patient Name',
                       border: OutlineInputBorder(),
                     ),
                     validator: (String? value) {
@@ -81,7 +57,7 @@ class _RegisterFormState extends State<RegisterForm> {
                           .toString()
                           .trim()
                           .isEmpty) {
-                        return 'First Name is required';
+                        return 'Patient Name is required';
                       }
                     },
                   ),
@@ -89,7 +65,23 @@ class _RegisterFormState extends State<RegisterForm> {
                   const SizedBox(height: 16.0),
                   TextFormField(
                     decoration: const InputDecoration(
-                      labelText: 'Last Name',
+                      labelText: 'Patient Admission ID',
+                      border: OutlineInputBorder(),
+                    ),
+                    /*validator: (String? value) {
+                      if (value
+                          .toString()
+                          .trim()
+                          .isEmpty) {
+                        return 'Patient Admission Id is required';
+                      }
+                    },*/
+                  ),
+
+                  const SizedBox(height: 16.0),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Patient Age',
                       border: OutlineInputBorder(),
                     ),
                     validator: (String? value) {
@@ -97,7 +89,7 @@ class _RegisterFormState extends State<RegisterForm> {
                           .toString()
                           .trim()
                           .isEmpty) {
-                        return 'Last Name is required';
+                        return 'Patient Age is required';
                       }
                     },
                   ),
@@ -109,10 +101,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       labelText: 'Gender', border: OutlineInputBorder(),),
                     onChanged: (selectedBloodGroup) =>
                         setState(() => selectedBloodGroup = selectedGender),
-                    validator: (value) =>
-                    value == null
-                        ? 'Gender is required'
-                        : null,
+                    validator: (value) => value == null ? 'Gender is required' : null,
                     items:
                     ['Male', 'Female', 'Others'].map<DropdownMenuItem<String>>((
                         String value) {
@@ -124,38 +113,37 @@ class _RegisterFormState extends State<RegisterForm> {
                   ),
 
                   const SizedBox(height: 16.0),
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
-                    decoration: const InputDecoration(
-                      labelText: 'Age',
-                      border: OutlineInputBorder(),
-                    ),
-                    validator: (String? value) {
-                      if (value
-                          .toString()
-                          .trim()
-                          .isEmpty) {
-                        return 'Age is required';
-                      }
-                    },
+                  DropdownButtonFormField<String>(
+                    value: selectedRequestType,
+                    decoration: InputDecoration(
+                      labelText: 'Request Type', border: OutlineInputBorder(),),
+                    onChanged: (selectedBloodGroup) =>
+                        setState(() => selectedBloodGroup = selectedRequestType),
+                    validator: (value) => value == null ? 'Request Type is required' : null,
+                    items:
+                    ['Blood', 'Platelets', 'Plasma'].map<DropdownMenuItem<String>>((
+                        String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
                   ),
 
                   const SizedBox(height: 16.0),
                   DropdownButtonFormField<String>(
-                    value: selectedBloodGroup,
                     decoration: InputDecoration(
                       labelText: 'Blood Group', border: OutlineInputBorder(),),
-                    onChanged: (selectedBloodGroup) =>
-                        setState(() => selectedBloodGroup = selectedBloodGroup),
+                    value: selectedBloodGroup,
+                    onChanged: (salutation) =>
+                        setState(() => selectedBloodGroup = salutation),
                     validator: (value) =>
                     value == null
                         ? 'Blood Group is required'
                         : null,
                     items:
                     [
+                      'Any',
                       'A+',
                       'A-',
                       'B+',
@@ -182,12 +170,8 @@ class _RegisterFormState extends State<RegisterForm> {
 
                   const SizedBox(height: 16.0),
                   TextFormField(
-                    keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
                     decoration: const InputDecoration(
-                      labelText: 'Mobile Number',
+                      labelText: 'Blood Units Required',
                       border: OutlineInputBorder(),
                     ),
                     validator: (String? value) {
@@ -195,7 +179,59 @@ class _RegisterFormState extends State<RegisterForm> {
                           .toString()
                           .trim()
                           .isEmpty) {
-                        return 'Mobile number is required';
+                        return 'Blood Units is required';
+                      }
+                    },
+                  ),
+
+                  const SizedBox(height: 16.0),
+                  DropdownButtonFormField<String>(
+                    value: selectedRequestStatus,
+                    decoration: InputDecoration(
+                      labelText: 'Medical Status', border: OutlineInputBorder(),),
+                    onChanged: (selectedBloodGroup) =>
+                        setState(() => selectedBloodGroup = selectedRequestStatus),
+                    validator: (value) => value == null ? 'Medical status is required' : null,
+                    items:
+                    ['Normal', 'Emergency', 'Critical'].map<DropdownMenuItem<String>>((
+                        String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+
+                  const SizedBox(height: 16.0),
+                  DateTimeField(
+                    decoration: InputDecoration(
+                      labelText: 'Due Date', border: OutlineInputBorder(),
+                    ),
+                    validator: (DateTime? value) {
+                      if (value
+                          .toString()
+                          .trim()
+                          .isEmpty) {
+                        return 'Due Date is required';
+                      }
+                    },
+                    format: format,
+                    onShowPicker: (context, currentValue) async {
+                      final date = await showDatePicker(
+                          context: context,
+                          firstDate: DateTime(1900),
+                          initialDate: currentValue ?? DateTime.now(),
+                          lastDate: DateTime(2100));
+                      if (date != null) {
+                        final time = await showTimePicker(
+                          context: context,
+                          initialTime:
+                          TimeOfDay.fromDateTime(
+                              currentValue ?? DateTime.now()),
+                        );
+                        return DateTimeField.combine(date, time);
+                      } else {
+                        return currentValue;
                       }
                     },
                   ),
@@ -203,18 +239,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   const SizedBox(height: 16.0),
                   TextFormField(
                     decoration: const InputDecoration(
-                      labelText: 'Email',
-                      border: OutlineInputBorder(),
-                    ),
-                    validator: (value) => EmailValidator.validate(value) ? null : "Please enter a valid email",
-                  ),
-
-                  const SizedBox(height: 16.0),
-                  TextFormField(
-                    obscureText: true,
-                    obscuringCharacter: '*',
-                    decoration: const InputDecoration(
-                      labelText: 'Password',
+                      labelText: 'Attender Name',
                       border: OutlineInputBorder(),
                     ),
                     validator: (String? value) {
@@ -222,7 +247,56 @@ class _RegisterFormState extends State<RegisterForm> {
                           .toString()
                           .trim()
                           .isEmpty) {
-                        return 'Password is required';
+                        return 'Attender Name is required';
+                      }
+                    },
+                  ),
+
+                  const SizedBox(height: 16.0),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Attender Contact Number',
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (String? value) {
+                      if (value
+                          .toString()
+                          .trim()
+                          .isEmpty) {
+                        return 'Attender Contact is required';
+                      }
+                    },
+                  ),
+
+
+                  const SizedBox(height: 16.0),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Hospital Name',
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (String? value) {
+                      if (value
+                          .toString()
+                          .trim()
+                          .isEmpty) {
+                        return 'Hospital Name is required';
+                      }
+                    },
+                  ),
+
+                  const SizedBox(height: 16.0),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Hospital Address',
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (String? value) {
+                      if (value
+                          .toString()
+                          .trim()
+                          .isEmpty) {
+                        return 'Hospital Address is required';
                       }
                     },
                   ),
@@ -296,7 +370,6 @@ class _RegisterFormState extends State<RegisterForm> {
                       ),
                     ),
                   ),
-                  Divider(),
 
                   const SizedBox(height: 16.0),
                   DropdownSearch<String>(
@@ -304,7 +377,6 @@ class _RegisterFormState extends State<RegisterForm> {
                     items: matchLocations?.cast<String>(),
                     dropdownSearchDecoration: InputDecoration(
                       labelText: "Select Location",
-                      hintText: "Select Location",
                       contentPadding: EdgeInsets.fromLTRB(12, 12, 0, 0),
                       border: OutlineInputBorder(),
                     ),
@@ -355,68 +427,17 @@ class _RegisterFormState extends State<RegisterForm> {
                       ),
                     ),
                   ),
-                  Divider(),
 
-                  const SizedBox(height: 16.0),
-                  DateTimeField(
-                    decoration: InputDecoration(
-                      labelText: 'Last Donated Date', border: OutlineInputBorder(),
-                    ),
-                    format: format,
-                    onShowPicker: (context, currentValue) async {
-                      final date = await showDatePicker(
-                          context: context,
-                          firstDate: DateTime(1900),
-                          initialDate: currentValue ?? DateTime.now(),
-                          lastDate: DateTime(2100));
-                      if (date != null) {
-                        final time = await showTimePicker(
-                          context: context,
-                          initialTime:
-                          TimeOfDay.fromDateTime(
-                              currentValue ?? DateTime.now()),
-                        );
-                        return DateTimeField.combine(date, time);
-                      } else {
-                        return currentValue;
+                  //LocationSelection(key: _formKey),
+                  const SizedBox(height: 36.0),
+                  ElevatedButton(
+                    onPressed: () {
+                      _submit();
+                      if (_submittable()) {
+
                       }
                     },
-                  ),
-
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: Row(
-                      children: <Widget>[
-                        Checkbox(
-                          value: _agreedToTOS,
-                          onChanged: _setAgreedToTOS,
-                          checkColor: kPrimaryLightColor,
-                          activeColor: kPrimaryColor,
-                        ),
-                        GestureDetector(
-                          onTap: () => _setAgreedToTOS(!_agreedToTOS),
-                          child: const Text(
-                            'I agree to the Terms of Services and Privacy Policy',
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Align(
-                          alignment: Alignment.center,
-                          child: ElevatedButton(
-                            onPressed: _submittable() ? _submit : null,
-                            child: const Text('Register'),
-                            style: ElevatedButton.styleFrom(
-                              primary: kPrimaryColor,
-                            ),
-                          )
-                      ),
-                    ],
+                    child: const Text('Confirm Request'),
                   ),
                 ],
               ),
@@ -436,7 +457,6 @@ class _RegisterFormState extends State<RegisterForm> {
 
   void _submit() {
     _formKey.currentState?.validate();
-    RegisterUser();
     print('Form submitted');
   }
 
@@ -445,19 +465,29 @@ class _RegisterFormState extends State<RegisterForm> {
       _agreedToTOS = newValue == null ? false : newValue;
     });
   }
+}
+Future<List<Location>> ReadJsonData() async {
+  final jsondata = await rootBundle.loadString('assets/location.json');
+  final list = json.decode(jsondata) as List<dynamic>;
+  return list.map((e) => Location.fromJson(e)).toList();
+}
 
-  Future<http.Response> RegisterUser() async {
-    String url = "https://jsonplaceholder.typicode.com/posts";
-    final response = await http.get(
-        Uri.parse('https://localhost:5001/api/user'));
-    return http.get(
-      Uri.parse('https://localhost:5001/api/user'),
-      //headers: <String, String>{
-      //'Content-Type': 'application/json; charset=UTF-8',
-      //},
-      //body: jsonEncode(<String, String>{
-      // 'title': title,
-      //}),
-    );
-  }
+Future<List<Location>> fetchRaisedRequest(http.Client client) async {
+  final response = await client
+      .get(Uri.parse('https://jsonplaceholder.typicode.com/photos'));
+  // Use the compute function to run parsePhotos in a separate isolate.
+  return compute(parseRaisedRequest, response.body);
+}
+
+Future<List<Location>> readRaisedRequestJson() async {
+  final String response = await rootBundle.loadString('assets/location.json');
+  return compute(parseRaisedRequest, response);
+}
+
+// A function that converts a response body into a List<Photo>.
+List<Location> parseRaisedRequest(String responseBody) {
+  final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
+
+  return parsed.map<Location>((json) => Location.fromJson(json))
+      .toList();
 }
