@@ -9,7 +9,6 @@ import 'package:flutter/services.dart';
 import 'dart:async' show Future;
 
 class RaisedRequest extends StatelessWidget {
-
   Future<List<BloodRequest>> ReadJsonData() async {
     //read json file
     final jsondata = await rootBundle.loadString('assets/bloodrequest.json');
@@ -29,16 +28,17 @@ class RaisedRequest extends StatelessWidget {
   }
 
   Future<List<BloodRequest>> readRaisedRequestJson() async {
-    final String response = await rootBundle.loadString('assets/bloodrequest.json');
+    final String response =
+        await rootBundle.loadString('assets/bloodrequest.json');
     return compute(parseRaisedRequest, response);
   }
-
 
   // A function that converts a response body into a List<Photo>.
   List<BloodRequest> parseRaisedRequest(String responseBody) {
     final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
 
-    return parsed.map<BloodRequest>((json) => BloodRequest.fromJson(json))
+    return parsed
+        .map<BloodRequest>((json) => BloodRequest.fromJson(json))
         .toList();
   }
 
@@ -48,7 +48,6 @@ class RaisedRequest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     Future<List<BloodRequest>> _items = readRaisedRequestJson();
 
     return FutureBuilder(
@@ -74,35 +73,40 @@ class RaisedRequest extends StatelessWidget {
                       ),
 
                       title:
-                      Text('Name:  ${items[index].patientname.toString()} ' '  Age:  ${items[index].age.toString()} '),
+                          Text('Name:  ${items[index].patientname.toString()} '
+                              '  Age:  ${items[index].age.toString()} '),
 
-                      subtitle:
-                      Column(children: <Widget>[
+                      subtitle: Column(children: <Widget>[
                         Row(
                           //mainAxisSize: MainAxisSize.min,
                           //crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                                'Units required: ${items[index].units.toString() }'
-                            ),
+                                'Units required: ${items[index].units.toString()}'),
                           ],
                         ),
                         Row(
                           //mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
+                            // Text(
+                            //   'Location: ${items[index].location}',
+                            //   overflow: TextOverflow.ellipsis,
+                            // ),
                             Text(
-                                'Location: ${items[index].location }'
+                              'Location: ${items[index].location}',
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              softWrap: true,
+                             // style: Theme.of(context).textTheme.bodyText1,
                             ),
                           ],
                         ),
                         Row(
                           //mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(
-                                'Status: ${items[index].medicalstatus }'
-                            ),
+                            Text('Status: ${items[index].medicalstatus}'),
                           ],
                         ),
                       ]),
@@ -135,17 +139,15 @@ class RaisedRequest extends StatelessWidget {
                   ),
                 );
               },
-              separatorBuilder: (BuildContext context,
-                  int index) => const Divider(),
+              separatorBuilder: (BuildContext context, int index) =>
+                  const Divider(),
             );
-          }
-          else {
+          } else {
             return Center(
               child: CircularProgressIndicator(),
             );
           }
-        }
-    );
+        });
   }
 
   void actionPopUpItemSelected() {
@@ -163,5 +165,3 @@ class RaisedRequest extends StatelessWidget {
     */
   }
 }
-
-

@@ -36,8 +36,7 @@ Future<List<Location>> readRaisedRequestJson() async {
 List<Location> parseRaisedRequest(String responseBody) {
   final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
 
-  return parsed.map<Location>((json) => Location.fromJson(json))
-      .toList();
+  return parsed.map<Location>((json) => Location.fromJson(json)).toList();
 }
 
 class RegisterForm extends StatefulWidget {
@@ -77,10 +76,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       border: OutlineInputBorder(),
                     ),
                     validator: (String? value) {
-                      if (value
-                          .toString()
-                          .trim()
-                          .isEmpty) {
+                      if (value.toString().trim().isEmpty) {
                         return 'First Name is required';
                       }
                     },
@@ -93,10 +89,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       border: OutlineInputBorder(),
                     ),
                     validator: (String? value) {
-                      if (value
-                          .toString()
-                          .trim()
-                          .isEmpty) {
+                      if (value.toString().trim().isEmpty) {
                         return 'Last Name is required';
                       }
                     },
@@ -106,16 +99,15 @@ class _RegisterFormState extends State<RegisterForm> {
                   DropdownButtonFormField<String>(
                     value: selectedGender,
                     decoration: InputDecoration(
-                      labelText: 'Gender', border: OutlineInputBorder(),),
+                      labelText: 'Gender',
+                      border: OutlineInputBorder(),
+                    ),
                     onChanged: (selectedBloodGroup) =>
                         setState(() => selectedBloodGroup = selectedGender),
                     validator: (value) =>
-                    value == null
-                        ? 'Gender is required'
-                        : null,
-                    items:
-                    ['Male', 'Female', 'Others'].map<DropdownMenuItem<String>>((
-                        String value) {
+                        value == null ? 'Gender is required' : null,
+                    items: ['Male', 'Female', 'Others']
+                        .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -134,10 +126,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       border: OutlineInputBorder(),
                     ),
                     validator: (String? value) {
-                      if (value
-                          .toString()
-                          .trim()
-                          .isEmpty) {
+                      if (value.toString().trim().isEmpty) {
                         return 'Age is required';
                       }
                     },
@@ -147,15 +136,14 @@ class _RegisterFormState extends State<RegisterForm> {
                   DropdownButtonFormField<String>(
                     value: selectedBloodGroup,
                     decoration: InputDecoration(
-                      labelText: 'Blood Group', border: OutlineInputBorder(),),
+                      labelText: 'Blood Group',
+                      border: OutlineInputBorder(),
+                    ),
                     onChanged: (selectedBloodGroup) =>
                         setState(() => selectedBloodGroup = selectedBloodGroup),
                     validator: (value) =>
-                    value == null
-                        ? 'Blood Group is required'
-                        : null,
-                    items:
-                    [
+                        value == null ? 'Blood Group is required' : null,
+                    items: [
                       'A+',
                       'A-',
                       'B+',
@@ -191,10 +179,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       border: OutlineInputBorder(),
                     ),
                     validator: (String? value) {
-                      if (value
-                          .toString()
-                          .trim()
-                          .isEmpty) {
+                      if (value.toString().trim().isEmpty) {
                         return 'Mobile number is required';
                       }
                     },
@@ -206,7 +191,9 @@ class _RegisterFormState extends State<RegisterForm> {
                       labelText: 'Email',
                       border: OutlineInputBorder(),
                     ),
-                    validator: (value) => EmailValidator.validate(value) ? null : "Please enter a valid email",
+                    validator: (value) => EmailValidator.validate(value!)
+                        ? null
+                        : "Please enter a valid email",
                   ),
 
                   const SizedBox(height: 16.0),
@@ -218,10 +205,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       border: OutlineInputBorder(),
                     ),
                     validator: (String? value) {
-                      if (value
-                          .toString()
-                          .trim()
-                          .isEmpty) {
+                      if (value.toString().trim().isEmpty) {
                         return 'Password is required';
                       }
                     },
@@ -230,19 +214,17 @@ class _RegisterFormState extends State<RegisterForm> {
                   const SizedBox(height: 16.0),
                   DropdownSearch<String>(
                     mode: Mode.DIALOG,
-                    items: (_locations.map((value) =>
-                        value.district.toString())).toList().cast<String>(),
+                    items:
+                        (_locations.map((value) => value.district.toString()))
+                            .toList()
+                            .cast<String>(),
                     dropdownSearchDecoration: InputDecoration(
                         labelText: "Select District",
                         contentPadding: EdgeInsets.fromLTRB(12, 12, 0, 0),
                         border: OutlineInputBorder(),
-                        hintText: "Select a district"
-                    ),
+                        hintText: "Select a district"),
                     validator: (String? value) {
-                      if (value
-                          .toString()
-                          .trim()
-                          .isEmpty) {
+                      if (value.toString().trim().isEmpty) {
                         return 'District is required';
                       }
                     },
@@ -270,9 +252,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     popupTitle: Container(
                       height: 50,
                       decoration: BoxDecoration(
-                        color: Theme
-                            .of(context)
-                            .primaryColorDark,
+                        color: Theme.of(context).primaryColorDark,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(16),
                           topRight: Radius.circular(16),
@@ -309,10 +289,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       border: OutlineInputBorder(),
                     ),
                     validator: (String? value) {
-                      if (value
-                          .toString()
-                          .trim()
-                          .isEmpty) {
+                      if (value.toString().trim().isEmpty) {
                         return 'Location is required';
                       }
                     },
@@ -329,9 +306,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     popupTitle: Container(
                       height: 50,
                       decoration: BoxDecoration(
-                        color: Theme
-                            .of(context)
-                            .primaryColorDark,
+                        color: Theme.of(context).primaryColorDark,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(16),
                           topRight: Radius.circular(16),
@@ -360,7 +335,8 @@ class _RegisterFormState extends State<RegisterForm> {
                   const SizedBox(height: 16.0),
                   DateTimeField(
                     decoration: InputDecoration(
-                      labelText: 'Last Donated Date', border: OutlineInputBorder(),
+                      labelText: 'Last Donated Date',
+                      border: OutlineInputBorder(),
                     ),
                     format: format,
                     onShowPicker: (context, currentValue) async {
@@ -372,8 +348,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       if (date != null) {
                         final time = await showTimePicker(
                           context: context,
-                          initialTime:
-                          TimeOfDay.fromDateTime(
+                          initialTime: TimeOfDay.fromDateTime(
                               currentValue ?? DateTime.now()),
                         );
                         return DateTimeField.combine(date, time);
@@ -384,7 +359,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   ),
 
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    padding: const EdgeInsets.symmetric(vertical: 22.0),
                     child: Row(
                       children: <Widget>[
                         Checkbox(
@@ -394,35 +369,76 @@ class _RegisterFormState extends State<RegisterForm> {
                           activeColor: kPrimaryColor,
                         ),
                         GestureDetector(
-                          onTap: () => _setAgreedToTOS(!_agreedToTOS),
-                          child: const Text(
-                            'I agree to the Terms of Services and Privacy Policy',
-                          ),
-                        ),
+                            onTap: () => _setAgreedToTOS(!_agreedToTOS),
+                            child: Column(children: <Widget>[
+                              Text(
+                                'I agree to the Terms of Services and',
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    letterSpacing: 1,
+                                    wordSpacing: 1),
+                              ),
+                              Text(
+                                'Privacy Policy',
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    letterSpacing: 1,
+                                    wordSpacing: 1),
+                              ),
+                            ])),
+
+                        // GestureDetector(
+                        //   onTap: () => _setAgreedToTOS(!_agreedToTOS),
+                        //   child: const Text(
+                        //     'I agree to the Terms of Services and Privacy Policy',
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
-
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Align(
-                          alignment: Alignment.center,
-                          child: ElevatedButton(
-                            onPressed: _submittable() ? _submit : null,
-                            child: const Text('Register'),
-                            style: ElevatedButton.styleFrom(
-                              primary: kPrimaryColor,
-                            ),
-                          )
+                  Center(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      height: 45,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          primary: kPrimaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          elevation: 7.0,
+                          shadowColor: kPrimaryLightColor,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Text(
+                            'Register',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ),
                       ),
-                    ],
+                    ),
                   ),
+                  // Row(
+                  //   crossAxisAlignment: CrossAxisAlignment.center,
+                  //   children: <Widget>[
+                  //     Align(
+                  //         alignment: Alignment.center,
+                  //         child: ElevatedButton(
+                  //           onPressed: _submittable() ? _submit : null,
+                  //           child: const Text('Register'),
+                  //           style: ElevatedButton.styleFrom(
+                  //             primary: kPrimaryColor,
+                  //           ),
+                  //         )
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
             );
-          }
-          else {
+          } else {
             return Center(
               child: CircularProgressIndicator(),
             );
@@ -448,8 +464,8 @@ class _RegisterFormState extends State<RegisterForm> {
 
   Future<http.Response> RegisterUser() async {
     String url = "https://jsonplaceholder.typicode.com/posts";
-    final response = await http.get(
-        Uri.parse('https://localhost:5001/api/user'));
+    final response =
+        await http.get(Uri.parse('https://localhost:5001/api/user'));
     return http.get(
       Uri.parse('https://localhost:5001/api/user'),
       //headers: <String, String>{

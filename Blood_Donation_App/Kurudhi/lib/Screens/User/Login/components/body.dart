@@ -14,8 +14,10 @@ import '/constants.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/services.dart';
 import 'dart:async' show Future;
+import 'package:email_validator/email_validator.dart';
 
 bool _obscureText = true;
+
 class LoginFormBody extends StatefulWidget {
   @override
   _LoginFormState createState() => new _LoginFormState();
@@ -23,6 +25,9 @@ class LoginFormBody extends StatefulWidget {
 
 class _LoginFormState extends State<LoginFormBody> {
   // Toggles the password show status
+  TextEditingController nameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  bool _agreedToTOS = false;
   void _toggle() {
     setState(() {
       _obscureText = !_obscureText;
@@ -31,14 +36,30 @@ class _LoginFormState extends State<LoginFormBody> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     return Background(
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Padding(
+                padding: EdgeInsets.fromLTRB(200, 5, 10, 30),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Checkbox(
+                        value: _agreedToTOS,
+                        onChanged: _setAgreedToTOS,
+                        checkColor: kPrimaryLightColor,
+                        activeColor: kPrimaryColor,
+                      ),
+                      GestureDetector(
+                        onTap: () => _setAgreedToTOS(!_agreedToTOS),
+                        child: const Text(
+                          'Admin',
+                        ),
+                      ),
+                    ])),
             Text(
               "LOGIN",
               style: TextStyle(fontWeight: FontWeight.bold),
@@ -49,84 +70,40 @@ class _LoginFormState extends State<LoginFormBody> {
               height: size.height * 0.30,
             ),
             SizedBox(height: size.height * 0.03),
-            TextFieldContainer(
+            Container(
+              padding: EdgeInsets.all(10),
               child: TextField(
-                cursorColor: kPrimaryColor,
+                controller: nameController,
                 decoration: InputDecoration(
                   hintText: "Your Email",
+                  errorText: validateEmail(nameController.text),
                   icon: Icon(
                     Icons.person,
                     color: kPrimaryColor,
                   ),
                   border: InputBorder.none,
                 ),
-                /*validator: (String? value) {
-                    if (value
-                        .toString()
-                        .trim()
-                        .isEmpty) {
-                      return 'Email is required';
-                    }
-                  },*/
               ),
             ),
-
-            TextFieldContainer(
+            Container(
+              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: TextField(
-                obscureText: _obscureText,
-                //onChanged: onChanged,
-                cursorColor: kPrimaryColor,
+                controller: passwordController,
                 decoration: InputDecoration(
                   hintText: "Password",
+                  errorText: validatePassword(passwordController.text),
                   icon: Icon(
-                    Icons.lock,
+                    Icons.person,
                     color: kPrimaryColor,
-                  ),
-                  suffixIcon: IconButton(
-                      icon: Icon(
-                        Icons.visibility,
-                        color: kPrimaryColor,
-                      ),
-                      onPressed: () => _toggle()
-
                   ),
                   border: InputBorder.none,
                 ),
-                /*validator: (String? value) {
-                    if (value
-                        .toString()
-                        .trim()
-                        .isEmpty) {
-                      return 'Password is required';
-                    }
-                  },*/
               ),
             ),
             RoundedButton(
               text: "LOGIN",
               press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      //fetchRaisedRequest();
-                     //apiTest();
-
-                      /*Future<http.Response> createAlbum(String title) {
-                        return http.post(
-                          Uri.parse('https://jsonplaceholder.typicode.com/albums'),
-                          headers: <String, String>{
-                            'Content-Type': 'application/json; charset=UTF-8',
-                          },
-                          body: jsonEncode(<String, String>{
-                            'title': title,
-                          }),
-                        );
-                      }*/
-                      return LandingPage();
-                    },
-                  ),
-                );
+                loginAPI(nameController.text, passwordController.text, context);
               },
             ),
             SizedBox(height: size.height * 0.03),
@@ -148,6 +125,28 @@ class _LoginFormState extends State<LoginFormBody> {
     );
   }
 
+  String? validatePassword(String value) {
+    if (value.isEmpty) {
+      return "Password is required";
+    }
+    return null;
+  }
+
+  String? validateEmail(String value) {
+    if (value.isEmpty) {
+      return "Email is required";
+    } else if (EmailValidator.validate(value) == null) {
+      return "Enter a valid email";
+    }
+    return null;
+  }
+
+  void _setAgreedToTOS(bool? newValue) {
+    setState(() {
+      _agreedToTOS = newValue == null ? false : newValue;
+    });
+  }
+
   Future<List<BloodRequest>> fetchRaisedRequest(http.Client client) async {
     final response = await client
         .get(Uri.parse('https://jsonplaceholder.typicode.com/photos'));
@@ -159,21 +158,66 @@ class _LoginFormState extends State<LoginFormBody> {
   List<BloodRequest> parseRaisedRequest(String responseBody) {
     final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
 
-    return parsed.map<BloodRequest>((json) => BloodRequest.fromJson(json))
+    return parsed
+        .map<BloodRequest>((json) => BloodRequest.fromJson(json))
         .toList();
   }
-
 
   Future<http.Response> apiTest() async {
     var client = new http.Client();
     var url = Uri.parse('https://jsonplaceholder.typicode.com/albums');
     try {
-
       print(await client.get(url));
-    }
-    finally {
-    client.close();
+    } finally {
+      client.close();
     }
     return await client.get(url);
+  }
+}
+
+Future loginAPI(String userName, String password, BuildContext context) async {
+  final response = await http.post(
+    Uri.parse('https://www.kurudhi.org/Users/authenticate'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(
+        <String, String>{'username': userName, 'password': password}),
+  );
+
+  if (response.statusCode == 200) {
+    // If the server did return a 201 CREATED response,
+    // then parse the JSON.
+    // return Album.fromJson(jsonDecode(response.body));
+    print(jsonDecode(response.body));
+    Map<String, dynamic> responseJson = json.decode(response.body);
+    if (responseJson["token"] != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return LandingPage();
+          },
+        ),
+      );
+    }
+  } else {
+    // If the server did not return a 201 CREATED response,
+    // then throw an exception.
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text("Login failed"),
+        content: Text("Invalid user credentials"),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+            child: Text("Ok"),
+          ),
+        ],
+      ),
+    );
   }
 }

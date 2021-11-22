@@ -36,8 +36,7 @@ Future<List<Location>> readRaisedRequestJson() async {
 List<Location> parseRaisedRequest(String responseBody) {
   final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
 
-  return parsed.map<Location>((json) => Location.fromJson(json))
-      .toList();
+  return parsed.map<Location>((json) => Location.fromJson(json)).toList();
 }
 
 class UserProfileForm extends StatefulWidget {
@@ -100,10 +99,7 @@ class _UserProfileFormState extends State<UserProfileForm> {
                       border: OutlineInputBorder(),
                     ),
                     validator: (String? value) {
-                      if (value
-                          .toString()
-                          .trim()
-                          .isEmpty) {
+                      if (value.toString().trim().isEmpty) {
                         return 'First Name is required';
                       }
                     },
@@ -116,10 +112,7 @@ class _UserProfileFormState extends State<UserProfileForm> {
                       border: OutlineInputBorder(),
                     ),
                     validator: (String? value) {
-                      if (value
-                          .toString()
-                          .trim()
-                          .isEmpty) {
+                      if (value.toString().trim().isEmpty) {
                         return 'Last Name is required';
                       }
                     },
@@ -129,16 +122,15 @@ class _UserProfileFormState extends State<UserProfileForm> {
                   DropdownButtonFormField<String>(
                     value: selectedGender,
                     decoration: InputDecoration(
-                      labelText: 'Gender', border: OutlineInputBorder(),),
+                      labelText: 'Gender',
+                      border: OutlineInputBorder(),
+                    ),
                     onChanged: (selectedBloodGroup) =>
                         setState(() => selectedBloodGroup = selectedGender),
                     validator: (value) =>
-                    value == null
-                        ? 'Gender is required'
-                        : null,
-                    items:
-                    ['Male', 'Female', 'Others'].map<DropdownMenuItem<String>>((
-                        String value) {
+                        value == null ? 'Gender is required' : null,
+                    items: ['Male', 'Female', 'Others']
+                        .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -157,10 +149,7 @@ class _UserProfileFormState extends State<UserProfileForm> {
                       border: OutlineInputBorder(),
                     ),
                     validator: (String? value) {
-                      if (value
-                          .toString()
-                          .trim()
-                          .isEmpty) {
+                      if (value.toString().trim().isEmpty) {
                         return 'Age is required';
                       }
                     },
@@ -170,15 +159,14 @@ class _UserProfileFormState extends State<UserProfileForm> {
                   DropdownButtonFormField<String>(
                     value: selectedBloodGroup,
                     decoration: InputDecoration(
-                      labelText: 'Blood Group', border: OutlineInputBorder(),),
+                      labelText: 'Blood Group',
+                      border: OutlineInputBorder(),
+                    ),
                     onChanged: (selectedBloodGroup) =>
                         setState(() => selectedBloodGroup = selectedBloodGroup),
                     validator: (value) =>
-                    value == null
-                        ? 'Blood Group is required'
-                        : null,
-                    items:
-                    [
+                        value == null ? 'Blood Group is required' : null,
+                    items: [
                       'A+',
                       'A-',
                       'B+',
@@ -214,10 +202,7 @@ class _UserProfileFormState extends State<UserProfileForm> {
                       border: OutlineInputBorder(),
                     ),
                     validator: (String? value) {
-                      if (value
-                          .toString()
-                          .trim()
-                          .isEmpty) {
+                      if (value.toString().trim().isEmpty) {
                         return 'Mobile number is required';
                       }
                     },
@@ -229,25 +214,25 @@ class _UserProfileFormState extends State<UserProfileForm> {
                       labelText: 'Email',
                       border: OutlineInputBorder(),
                     ),
-                    validator: (value) => EmailValidator.validate(value) ? null : "Please enter a valid email",
+                    validator: (value) => EmailValidator.validate(value!)
+                        ? null
+                        : "Please enter a valid email",
                   ),
 
                   const SizedBox(height: 16.0),
                   DropdownSearch<String>(
                     mode: Mode.DIALOG,
-                    items: (_locations.map((value) =>
-                        value.district.toString())).toList().cast<String>(),
+                    items:
+                        (_locations.map((value) => value.district.toString()))
+                            .toList()
+                            .cast<String>(),
                     dropdownSearchDecoration: InputDecoration(
                         labelText: "Select District",
                         contentPadding: EdgeInsets.fromLTRB(12, 12, 0, 0),
                         border: OutlineInputBorder(),
-                        hintText: "Select a district"
-                    ),
+                        hintText: "Select a district"),
                     validator: (String? value) {
-                      if (value
-                          .toString()
-                          .trim()
-                          .isEmpty) {
+                      if (value.toString().trim().isEmpty) {
                         return 'District is required';
                       }
                     },
@@ -275,9 +260,7 @@ class _UserProfileFormState extends State<UserProfileForm> {
                     popupTitle: Container(
                       height: 50,
                       decoration: BoxDecoration(
-                        color: Theme
-                            .of(context)
-                            .primaryColorDark,
+                        color: Theme.of(context).primaryColorDark,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(16),
                           topRight: Radius.circular(16),
@@ -314,10 +297,7 @@ class _UserProfileFormState extends State<UserProfileForm> {
                       border: OutlineInputBorder(),
                     ),
                     validator: (String? value) {
-                      if (value
-                          .toString()
-                          .trim()
-                          .isEmpty) {
+                      if (value.toString().trim().isEmpty) {
                         return 'Location is required';
                       }
                     },
@@ -334,9 +314,7 @@ class _UserProfileFormState extends State<UserProfileForm> {
                     popupTitle: Container(
                       height: 50,
                       decoration: BoxDecoration(
-                        color: Theme
-                            .of(context)
-                            .primaryColorDark,
+                        color: Theme.of(context).primaryColorDark,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(16),
                           topRight: Radius.circular(16),
@@ -365,7 +343,8 @@ class _UserProfileFormState extends State<UserProfileForm> {
                   const SizedBox(height: 16.0),
                   DateTimeField(
                     decoration: InputDecoration(
-                      labelText: 'Last Donated Date', border: OutlineInputBorder(),
+                      labelText: 'Last Donated Date',
+                      border: OutlineInputBorder(),
                     ),
                     format: format,
                     onShowPicker: (context, currentValue) async {
@@ -377,8 +356,7 @@ class _UserProfileFormState extends State<UserProfileForm> {
                       if (date != null) {
                         final time = await showTimePicker(
                           context: context,
-                          initialTime:
-                          TimeOfDay.fromDateTime(
+                          initialTime: TimeOfDay.fromDateTime(
                               currentValue ?? DateTime.now()),
                         );
                         return DateTimeField.combine(date, time);
@@ -414,15 +392,13 @@ class _UserProfileFormState extends State<UserProfileForm> {
                           child: ElevatedButton(
                             onPressed: _submittable() ? _submit : null,
                             child: const Text('Save'),
-                          )
-                      ),
+                          )),
                     ],
                   ),
                 ],
               ),
             );
-          }
-          else {
+          } else {
             return Center(
               child: CircularProgressIndicator(),
             );
@@ -431,7 +407,7 @@ class _UserProfileFormState extends State<UserProfileForm> {
   }
 
   bool _submittable() {
-    return  _agreedToTOS == null ? false : _agreedToTOS ;
+    return _agreedToTOS == null ? false : _agreedToTOS;
   }
 
   void _submit() {

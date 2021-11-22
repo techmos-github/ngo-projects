@@ -54,9 +54,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     labelColor: Colors.green,
                     unselectedLabelColor: Colors.black,
                     tabs: [
-                      Tab(text: 'Raised Request',),
-                      Tab(text: 'Approved Request'),
-                      Tab(text: 'Pending Approval'),
+                      Tab(text: 'Raised ',),
+                      Tab(text: 'Approved '),
+                      Tab(text: 'Pending'),
                     ],
                   ),
                 ),
