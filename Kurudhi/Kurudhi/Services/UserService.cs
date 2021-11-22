@@ -35,15 +35,22 @@ namespace Kurudhi.Services
 
         public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest model)
         {
-            var user = await _users.GetUserbyLogin(model).ConfigureAwait(false);
+            try
+            {
+                var user = await _users.GetUserbyLogin(model).ConfigureAwait(false);
 
-            // return null if user not found
-            if (user == null) return null;
+                // return null if user not found
+                if (user == null) return null;
 
-            // authentication successful so generate jwt token
-            var token = generateJwtToken(user);
+                // authentication successful so generate jwt token
+                var token = await generateJwtToken(user);
 
-            return new AuthenticateResponse(user, token);
+                return new AuthenticateResponse(user, token);
+            }
+            catch(Exception ex)
+            {
+                return new AuthenticateResponse(null, null);
+            }
         }
 
         public async Task<User> AddUser(User user) => await _users.AddUser(user).ConfigureAwait(false);
@@ -58,7 +65,7 @@ namespace Kurudhi.Services
         }
 
         #region private
-        private string generateJwtToken(User user)
+        private async Task<string> generateJwtToken(User user)
         {
             // generate token that is valid for 7 days
             var tokenHandler = new JwtSecurityTokenHandler();

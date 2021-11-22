@@ -12,9 +12,23 @@ namespace Kurudhi.Models.Features
     {
         private Kurudhi_DBContext dbContext;
 
-        public BloodRequestFeature(Kurudhi_DBContext context)
+        public BloodRequestFeature()
         {
-            dbContext = context;
+            dbContext = new Kurudhi_DBContext();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                dbContext?.Dispose();
+            }
         }
 
 

@@ -35,8 +35,9 @@ namespace Kurudhi
         {
             string mySqlConnectionStr = Configuration.GetConnectionString("KurudhiDB");
             services.AddDbContext<Kurudhi_DBContext>(options => options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
+            
             services.AddCors();
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddSwaggerGen();
 
@@ -44,10 +45,10 @@ namespace Kurudhi
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
             // configure DI for application services
-            services.AddScoped<IUser, UserFeature>();
-            services.AddScoped<IBloodRequest, BloodRequestFeature>();
-            services.AddScoped<IBloodRequestService, BloodRequestService>();
-            services.AddScoped<IUserService, UserService>();
+            services.AddTransient<IUser, UserFeature>();
+            services.AddTransient<IBloodRequest, BloodRequestFeature>();
+            services.AddTransient<IBloodRequestService, BloodRequestService>();
+            services.AddTransient<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,9 +57,14 @@ namespace Kurudhi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                //app.UseSwagger();
+                //app.UseSwaggerUI();
             }
+            //To be Removed
+            app.UseSwagger();
+            app.UseSwaggerUI();
+            //To be Removed
+
             app.UseHttpsRedirection();
             app.UseRouting();
 

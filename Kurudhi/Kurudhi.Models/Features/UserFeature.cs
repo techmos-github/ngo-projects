@@ -12,14 +12,35 @@ namespace Kurudhi.Models.Features
     {
         private Kurudhi_DBContext dbContext;
 
-        public UserFeature(Kurudhi_DBContext context)
+        public UserFeature()
         {
-            dbContext = context;
+            dbContext = new Kurudhi_DBContext();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                dbContext?.Dispose();
+            }
         }
 
         public async Task<User> GetUserbyLogin(AuthenticateRequest request)
         {
-            return await dbContext.Users.FirstOrDefaultAsync(x => x.Emailid.Equals(request.Username, StringComparison.OrdinalIgnoreCase) && x.Password.Equals(request.Password));
+            try
+            {
+                return await dbContext.Users.Where(x => x.Emailid.ToLower().Equals(request.Username.ToLower()) && x.Password.Equals(request.Password)).FirstOrDefaultAsync();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public async Task<User> GetUserbyId(int Id) => await dbContext.Users.FindAsync(Id);
@@ -30,7 +51,7 @@ namespace Kurudhi.Models.Features
 
         public async Task<User> AddUser(User user)
         {
-            var dbObj = await dbContext.Users.FirstOrDefaultAsync(x => x.Emailid.Equals(user.Emailid, StringComparison.OrdinalIgnoreCase)).ConfigureAwait(false);
+            var dbObj = await dbContext.Users.FirstOrDefaultAsync(x => x.Emailid.ToLower().Equals(user.Emailid.ToLower())).ConfigureAwait(false);
             if(dbObj == null)
             {
                 user.ActiveStatus = 1;
